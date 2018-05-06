@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Chip from 'material-ui/Chip';
+import {blue300} from 'material-ui/styles/colors';
 
 const styles = {
   chip: {
@@ -16,14 +17,30 @@ class FoodCategoryChip extends Component {
   }
 
   handleClick = () => {
-    console.log(this.props);
-    this.props.handleSelect(this.props.category);
+    let attemptToSelect = !this.state.selected;
+    let shouldIUpdateState = false;
+    if (attemptToSelect) {
+      shouldIUpdateState = this.props.handleSelect(this.props.category);
+    } else {
+      shouldIUpdateState = this.props.handleDeselect(this.props.category);
+    }
+    if (shouldIUpdateState) {
+      this.setState({
+        selected: !this.state.selected
+      });
+    }
   }
 
   render() {
+    let properties = {};
+    properties.onClick = this.handleClick;
+    if (this.state.selected) {
+      properties.backgroundColor = blue300;
+    }
+
     return (
       <div style={styles.chip}>
-        <Chip onClick={this.handleClick}>
+        <Chip {...properties}>
           {this.props.category}
         </Chip>
       </div>

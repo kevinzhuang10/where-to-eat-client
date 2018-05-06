@@ -1,43 +1,79 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import FoodCategoryChips from './FoodCategoryChips';
+import RaisedButton from 'material-ui/RaisedButton';
+import queryString from 'query-string';
+
+const style = {
+  margin: 12,
+};
 
 class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      choicesRemaining: 5,
+      choicesAvailable: 5,
       categories: ['Burger', 'Mexican Food', 'Korean Food', 'Italian Food', 'Chinese Food', 'Mediterranean Food', 'Salad', 'Thai Food', 'Japanese Food', 'Indian Food'],
-      selectedCategories: []
+      selectedCategories: [],
+      results: []
     };
-    // this.handleSelect = this.handleSelect.bind(this);
-  }
-
-  componentDidMount() {
-    this.getRecommendations();
   }
 
   handleSelect = (category) => {
-    this.setState({
-      selectedCategories: this.state.selectedCategories.concat(category)
-    });
+    if (this.state.selectedCategories.length < this.state.choicesAvailable) {
+      this.setState({
+        selectedCategories: this.state.selectedCategories.concat(category)
+      });
+      return true;
+    }
+    return false;
   }
 
-  async getRecommendations() {
-    let queryString = 'term=salad+japanese+korean&latitude=37.760737&longitude=-122.467954';
+  handleDeselect = (category) => {
+    let newSelectCategories = this.state.selectedCategories.slice();
+    let targetIndex = newSelectCategories.indexOf(category);
+    if (targetIndex !== -1) {
+      newSelectCategories.splice(targetIndex, 1);
+      this.setState({
+        selectedCategories: newSelectCategories
+      });
+      return true;
+    }
+    return false;
+  }
+
+  async getRecommendations(queryString) {
     let endPoint = 'recommend/index?';
     let devURL = process.env.REACT_APP_SERVER_API_URL + endPoint + queryString;
+    console.log('sending request', devURL);
     let result = await axios.get(devURL);
     console.log(result.data);
     this.setState({
-      dummyString: result.data[0].name
+      results: result.data
     });
+  }
+
+  handleClick = () => {
+    let lat = '37.760737';
+    let lon = '-122.467954';
+    let queryString = `term=${this.state.selectedCategories.join('+')}&latitude=${lat}&longitude=${lon}`;
+    this.getRecommendations(queryString);
   }
 
   render() {
     return (
     <div>
-      <FoodCategoryChips categories={this.state.categories} handleSelect={this.handleSelect}/>
+      <FoodCategoryChips 
+        categories={this.state.categories} 
+        handleSelect={this.handleSelect} 
+        handleDeselect={this.handleDeselect}
+      />
+      <RaisedButton 
+        label="Show Me The Magic" 
+        primary={true} 
+        style={style}
+        onClick={this.handleClick} 
+      />
     </div>
     );
   }

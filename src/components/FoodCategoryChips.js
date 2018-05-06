@@ -11,7 +11,16 @@ const styles = {
 function FoodCategoryChips(props) {
   return (
     <div style={styles.wrapper}>
-      {props.categories.map(((category, i) => <FoodCategoryChip key={i} category={category} handleSelect={props.handleSelect}/>))}
+      {props.categories.map((category, i) => {
+        return (
+          <FoodCategoryChip 
+            key={i} 
+            category={category} 
+            handleSelect={props.handleSelect}
+            handleDeselect={props.handleDeselect}
+          />
+        )})
+      }
     </div>
   );
 }
