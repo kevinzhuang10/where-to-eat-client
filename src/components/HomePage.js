@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import FoodCategoryChips from './FoodCategoryChips';
-import RaisedButton from 'material-ui/RaisedButton';
 import queryString from 'query-string';
-
-const style = {
-  margin: 12,
-};
+import CategoryPicker from './CategoryPicker';
+import RestaurantPicker from './RestaurantPicker';
 
 class HomePage extends Component {
   constructor(props) {
@@ -15,7 +11,8 @@ class HomePage extends Component {
       choicesAvailable: 5,
       categories: ['Burger', 'Mexican Food', 'Korean Food', 'Italian Food', 'Chinese Food', 'Mediterranean Food', 'Salad', 'Thai Food', 'Japanese Food', 'Indian Food'],
       selectedCategories: [],
-      results: []
+      availableOptions: [],
+      currentRestaurant: null
     };
   }
 
@@ -48,32 +45,57 @@ class HomePage extends Component {
     console.log('sending request', devURL);
     let result = await axios.get(devURL);
     console.log(result.data);
+    let restaurants = result.data;
+    let currentRestaurant = restaurants.pop();
     this.setState({
-      results: result.data
+      availableOptions: restaurants,
+      currentRestaurant: currentRestaurant
     });
   }
 
-  handleClick = () => {
-    let lat = '37.760737';
-    let lon = '-122.467954';
-    let queryString = `term=${this.state.selectedCategories.join('+')}&latitude=${lat}&longitude=${lon}`;
-    this.getRecommendations(queryString);
+  handleGetRecommendations = () => {
+    if (this.state.selectedCategories.length > 0) {
+      let lat = '37.760737';
+      let lon = '-122.467954';
+      let queryString = `term=${this.state.selectedCategories.join('+')}&latitude=${lat}&longitude=${lon}`;
+      this.getRecommendations(queryString);
+    }
+  }
+
+  handleNext = () => {
+    let newAvailableOptions = this.state.availableOptions.slice();
+    let nextRestaurant = newAvailableOptions.pop();
+    if (nextRestaurant) {
+      this.setState({
+        availableOptions: newAvailableOptions,
+        currentRestaurant: nextRestaurant
+      });
+    } else {
+      this.setState({
+        selectedCategories: [],
+        availableOptions: [],
+        currentRestaurant: null
+      });
+    }
   }
 
   render() {
     return (
     <div>
-      <FoodCategoryChips 
-        categories={this.state.categories} 
-        handleSelect={this.handleSelect} 
-        handleDeselect={this.handleDeselect}
-      />
-      <RaisedButton 
-        label="Show Me The Magic" 
-        primary={true} 
-        style={style}
-        onClick={this.handleClick} 
-      />
+      {!this.state.currentRestaurant &&
+        <CategoryPicker
+          categories={this.state.categories} 
+          handleSelect={this.handleSelect} 
+          handleDeselect={this.handleDeselect}
+          handleGetRecommendations={this.handleGetRecommendations}
+        />
+      }
+      {this.state.currentRestaurant && 
+        <RestaurantPicker
+          currentRestaurant={this.state.currentRestaurant}
+          handleNext={this.handleNext}
+        />
+      }
     </div>
     );
   }

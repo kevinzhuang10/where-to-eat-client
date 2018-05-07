@@ -8,7 +8,7 @@ const styles = {
   }
 };
 
-function FoodCategoryChips(props) {
+const FoodCategoryChips = (props) => {
   return (
     <div style={styles.wrapper}>
       {props.categories.map((category, i) => {
