@@ -79,6 +79,14 @@ class HomePage extends Component {
     }
   }
 
+  handleYes = () => {
+    this.setState({
+      selectedCategories: [],
+      availableOptions: [],
+      currentRestaurant: null
+    });
+  }
+
   render() {
     return (
     <div>
@@ -94,6 +102,7 @@ class HomePage extends Component {
         <RestaurantPicker
           currentRestaurant={this.state.currentRestaurant}
           handleNext={this.handleNext}
+          handleYes={this.handleYes}
         />
       }
     </div>

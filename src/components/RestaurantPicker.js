@@ -7,6 +7,7 @@ const RestaurantPicker = (props) => {
       <RestaurantCard 
         restaurant={props.currentRestaurant}
         handleNext={props.handleNext}
+        handleYes={props.handleYes}
       />
     </div>
   )

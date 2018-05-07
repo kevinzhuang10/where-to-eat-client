@@ -17,7 +17,7 @@ const RestaurantCard = (props) => {
         </CardMedia>
         <CardTitle title={props.restaurant.name} subtitle={props.restaurant.categories[0].title} />
         <CardActions>
-          <RaisedButton label="Yes!" primary={true} />
+          <RaisedButton label="Yes!" primary={true} onClick={props.handleYes}/>
           <RaisedButton label="Next" secondary={true} onClick={props.handleNext}/>
         </CardActions>
       </Card>

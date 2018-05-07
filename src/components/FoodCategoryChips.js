@@ -5,6 +5,8 @@ const styles = {
   wrapper: {
     display: 'flex',
     flexWrap: 'wrap',
+    margin: 12,
+    height: '250px'
   }
 };
 

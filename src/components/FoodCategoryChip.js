@@ -4,7 +4,7 @@ import {blue300} from 'material-ui/styles/colors';
 
 const styles = {
   chip: {
-    margin: 4
+    margin: '0 auto'
   }
 };
 
