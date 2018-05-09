@@ -1,4 +1,4 @@
-import {SELECT_CATEGORY, DESELECT_CATEGORY} from '../actions/CategoryPickerActions'
+import {SELECT_CATEGORY, DESELECT_CATEGORY} from '../actions/CategoryPicker'
 
 const initialState = {
   choicesAvailable: 5,
@@ -17,7 +17,7 @@ const CategoryPickerReducer = (state = initialState, action) => {
       }
       // return state;
     case DESELECT_CATEGORY:
-      const targetIndex = state.selectedCategories.indexOf(category);
+      const targetIndex = state.selectedCategories.indexOf(action.payload.category);
       if (targetIndex !== -1) {
         let newSelectCategories = state.selectedCategories.slice();
         newSelectCategories.splice(targetIndex, 1);

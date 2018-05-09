@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
-import CategoryPickerReducer from './CategoryPickerReducer'
-import RestaurantPickerReducer from './RestaurantPickerReducer'
+import CategoryPicker from './CategoryPicker'
+import RestaurantPicker from './RestaurantPicker'
+import UIState from './UIState'
 
 const rootReducer = combineReducers({
-  CategoryPickerReducer,
-  RestaurantPickerReducer
+  UIState,
+  CategoryPicker,
+  RestaurantPicker
 })
 
 export default rootReducer
