@@ -17,6 +17,7 @@ const FoodCategoryChips = (props) => {
         return (
           <FoodCategoryChip 
             key={i} 
+            categoryIndex={i}
             category={category} 
             handleSelect={props.handleSelect}
             handleDeselect={props.handleDeselect}

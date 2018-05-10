@@ -9,37 +9,37 @@ const styles = {
 };
 
 class FoodCategoryChip extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: false
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     selected: false
+  //   };
+  // }
 
-  handleClick = () => {
-    let attemptToSelect = !this.state.selected;
-    let shouldIUpdateState = false;
-    if (attemptToSelect) {
-      shouldIUpdateState = this.props.handleSelect(this.props.category);
-    } else {
-      shouldIUpdateState = this.props.handleDeselect(this.props.category);
-    }
-    if (shouldIUpdateState) {
-      this.setState({
-        selected: !this.state.selected
-      });
-    }
-  }
+  // handleClick = () => {
+  //   let attemptToSelect = !this.state.selected;
+  //   let shouldIUpdateState = false;
+  //   if (attemptToSelect) {
+  //     shouldIUpdateState = this.props.handleSelect(this.props.categoryIndex);
+  //   } else {
+  //     shouldIUpdateState = this.props.handleDeselect(this.props.categoryIndex);
+  //   }
+  //   if (shouldIUpdateState) {
+  //     this.setState({
+  //       selected: !this.state.selected
+  //     });
+  //   }
+  // }
 
   render() {
     let properties = {};
-    properties.onClick = this.handleClick;
-    if (this.state.selected) {
-      properties.backgroundColor = blue300;
-    }
+    // properties.onClick = this.handleClick;
+    // if (this.state.selected) {
+    //   properties.backgroundColor = blue300;
+    // }
 
     return (
-      <div style={styles.chip}>
+      <div style={styles.chip} onClick={() => this.props.handleSelect(this.props.categoryIndex)}>
         <Chip {...properties}>
           {this.props.category}
         </Chip>

@@ -1,20 +1,20 @@
 export const SELECT_CATEGORY = 'SELECT_CATEGORY';
 export const DESELECT_CATEGORY = 'DESELECT_CATEGORY';
 
-export const selectCategory = (category) => {
+export const selectCategory = (categoryIndex) => {
   return {
     type: SELECT_CATEGORY,
     payload: {
-      category
+      categoryIndex
     }
   }
 }
 
-export const deselectCategory = (category) => {
+export const deselectCategory = (categoryIndex) => {
   return {
     type: DESELECT_CATEGORY,
     payload: {
-      category
+      categoryIndex
     }
   }
 }

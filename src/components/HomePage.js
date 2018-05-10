@@ -5,6 +5,7 @@ import CategoryPicker from './CategoryPicker';
 import RestaurantPicker from './RestaurantPicker';
 import {selectCategory, deselectCategory, handleGetRecommendations} from '../actions/CategoryPicker';
 import {selectYes, selectNext} from '../actions/RestaurantPicker';
+import {highlightCategory} from '../actions/UIState';
 import { connect } from 'react-redux'
 
 class HomePage extends Component {
@@ -93,21 +94,21 @@ class HomePage extends Component {
   render() {
     return (
     <div>
-      {/* {!this.state.currentRestaurant && */}
+      {this.props.showCategoryPicker &&
         <CategoryPicker
           categories={this.props.categories} 
           handleSelect={this.props.handleSelect} 
           handleDeselect={this.props.handleDeselect}
           handleGetRecommendations={this.props.handleGetRecommendations}
         />
-      {/* } */}
-      {/* {this.state.currentRestaurant &&  */}
+      }
+      {this.props.showRestaurantPicker &&
         <RestaurantPicker
           currentRestaurant={this.props.currentRestaurant}
           handleNext={this.props.handleNext}
           handleYes={this.props.handleYes}
         />
-      {/* } */}
+      }
     </div>
     );
   }
@@ -122,12 +123,17 @@ const mapStateToProps = state => ({
   availableOptions: state.RestaurantPicker.availableOptions,
   choicesAvailable: state.CategoryPicker.choicesAvailable,
   categories: state.CategoryPicker.categories,
-  selectedCategories: state.CategoryPicker.selectedCategories
+  selectedCategories: state.CategoryPicker.selectedCategories,
+  showCategoryPicker: state.UIState.showCategoryPicker,
+  showRestaurantPicker: state.UIState.showRestaurantPicker
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleSelect: category => dispatch(selectCategory(category)),
-  handleDeselect: category => dispatch(deselectCategory(category)),
+  handleSelect: categoryIndex => {
+    dispatch(selectCategory(categoryIndex))
+    dispatch(highlightCategory(categoryIndex))
+  },
+  handleDeselect: categoryIndex => dispatch(deselectCategory(categoryIndex)),
   handleYes: () => dispatch(selectYes()),
   handleNext: () => dispatch(selectNext()),
   handleGetRecommendations: () => dispatch(handleGetRecommendations())

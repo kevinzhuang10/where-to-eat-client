@@ -1,8 +1,10 @@
 import {SELECT_CATEGORY, DESELECT_CATEGORY} from '../actions/CategoryPicker'
 
+export const initialCategories = ['Burger', 'Mexican Food', 'Korean Food', 'Italian Food', 'Chinese Food', 'Mediterranean Food', 'Salad', 'Thai Food', 'Japanese Food', 'Indian Food'];
+
 const initialState = {
   choicesAvailable: 5,
-  categories: ['Burger', 'Mexican Food', 'Korean Food', 'Italian Food', 'Chinese Food', 'Mediterranean Food', 'Salad', 'Thai Food', 'Japanese Food', 'Indian Food'],
+  categories: initialCategories,
   selectedCategories: []
 }
 
@@ -12,12 +14,12 @@ const CategoryPickerReducer = (state = initialState, action) => {
       if (state.selectedCategories.length < state.choicesAvailable) {
         return {
           ...state,
-          selectedCategories: state.selectedCategories.concat(action.payload.category)
+          selectedCategories: state.selectedCategories.concat(action.payload.categoryIndex)
         }
       }
       // return state;
     case DESELECT_CATEGORY:
-      const targetIndex = state.selectedCategories.indexOf(action.payload.category);
+      const targetIndex = state.selectedCategories.indexOf(action.payload.categoryIndex);
       if (targetIndex !== -1) {
         let newSelectCategories = state.selectedCategories.slice();
         newSelectCategories.splice(targetIndex, 1);
