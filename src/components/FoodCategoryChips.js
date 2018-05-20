@@ -13,14 +13,13 @@ const styles = {
 const FoodCategoryChips = (props) => {
   return (
     <div style={styles.wrapper}>
-      {props.categories.map((category, i) => {
+      {props.categoryStates.map((categoryState, i) => {
         return (
           <FoodCategoryChip 
             key={i} 
             categoryIndex={i}
-            category={category} 
-            handleSelect={props.handleSelect}
-            handleDeselect={props.handleDeselect}
+            categoryState={categoryState}
+            handleClickCategoryChip={props.handleClickCategoryChip}
           />
         )})
       }

@@ -10,9 +10,8 @@ const CategoryPicker = (props) => {
   return (
     <div>
       <FoodCategoryChips 
-        categories={props.categories} 
-        handleSelect={props.handleSelect} 
-        handleDeselect={props.handleDeselect}
+        categoryStates={props.categoryStates} 
+        handleClickCategoryChip={props.handleClickCategoryChip}
       />
       <RaisedButton 
         label="Show Me The Magic" 

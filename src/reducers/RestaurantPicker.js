@@ -1,8 +1,9 @@
 import {SELECT_YES, SELECT_NEXT} from '../actions/RestaurantPicker'
 
 const initialState = {
+  showRestaurantPicker: false,
   availableOptions: [],
-  currentRestaurant: null
+  currentRestaurant: null,
 }
 
 const RestaurantPicker = (state = initialState, action) => {

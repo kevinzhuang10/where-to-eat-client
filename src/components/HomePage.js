@@ -3,7 +3,7 @@ import axios from 'axios';
 import queryString from 'query-string';
 import CategoryPicker from './CategoryPicker';
 import RestaurantPicker from './RestaurantPicker';
-import {selectCategory, deselectCategory, handleGetRecommendations} from '../actions/CategoryPicker';
+import {selectCategory, deselectCategory, handleGetRecommendations, handleClickCategoryChip} from '../actions/CategoryPicker';
 import {selectYes, selectNext} from '../actions/RestaurantPicker';
 import {highlightCategory} from '../actions/UIState';
 import { connect } from 'react-redux'
@@ -96,9 +96,8 @@ class HomePage extends Component {
     <div>
       {this.props.showCategoryPicker &&
         <CategoryPicker
-          categories={this.props.categories} 
-          handleSelect={this.props.handleSelect} 
-          handleDeselect={this.props.handleDeselect}
+          categoryStates={this.props.categoryStates}
+          handleClickCategoryChip={this.props.handleClickCategoryChip}
           handleGetRecommendations={this.props.handleGetRecommendations}
         />
       }
@@ -119,27 +118,21 @@ class HomePage extends Component {
 
 
 const mapStateToProps = state => ({
+  showCategoryPicker: state.CategoryPicker.showCategoryPicker,
+  showRestaurantPicker: state.RestaurantPicker.showRestaurantPicker,
+  categoryStates: state.CategoryPicker.categoryStates,
   currentRestaurant: state.RestaurantPicker.currentRestaurant,
   availableOptions: state.RestaurantPicker.availableOptions,
-  choicesAvailable: state.CategoryPicker.choicesAvailable,
-  categories: state.CategoryPicker.categories,
-  selectedCategories: state.CategoryPicker.selectedCategories,
-  showCategoryPicker: state.UIState.showCategoryPicker,
-  showRestaurantPicker: state.UIState.showRestaurantPicker
-})
+});
 
 const mapDispatchToProps = dispatch => ({
-  handleSelect: categoryIndex => {
-    dispatch(selectCategory(categoryIndex))
-    dispatch(highlightCategory(categoryIndex))
-  },
-  handleDeselect: categoryIndex => dispatch(deselectCategory(categoryIndex)),
+  handleClickCategoryChip: categoryIndex => dispatch(handleClickCategoryChip(categoryIndex)),
   handleYes: () => dispatch(selectYes()),
   handleNext: () => dispatch(selectNext()),
   handleGetRecommendations: () => dispatch(handleGetRecommendations())
-})
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HomePage)
+)(HomePage);

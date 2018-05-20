@@ -8,44 +8,20 @@ const styles = {
   }
 };
 
-class FoodCategoryChip extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     selected: false
-  //   };
-  // }
-
-  // handleClick = () => {
-  //   let attemptToSelect = !this.state.selected;
-  //   let shouldIUpdateState = false;
-  //   if (attemptToSelect) {
-  //     shouldIUpdateState = this.props.handleSelect(this.props.categoryIndex);
-  //   } else {
-  //     shouldIUpdateState = this.props.handleDeselect(this.props.categoryIndex);
-  //   }
-  //   if (shouldIUpdateState) {
-  //     this.setState({
-  //       selected: !this.state.selected
-  //     });
-  //   }
-  // }
-
-  render() {
-    let properties = {};
-    // properties.onClick = this.handleClick;
-    // if (this.state.selected) {
-    //   properties.backgroundColor = blue300;
-    // }
-
-    return (
-      <div style={styles.chip} onClick={() => this.props.handleSelect(this.props.categoryIndex)}>
-        <Chip {...properties}>
-          {this.props.category}
-        </Chip>
-      </div>
-    )
+const FoodCategoryChip = (props) => {
+  const {handleClickCategoryChip, categoryState, categoryIndex} = props;
+  let backgroundColor;
+  if (categoryState.selected) {
+    backgroundColor = blue300
   }
+
+  return (
+    <div style={styles.chip}>
+      <Chip {...{onClick: () => handleClickCategoryChip(categoryIndex), backgroundColor}}>
+        {categoryState.categoryName}
+      </Chip>
+    </div>
+  );
 }
 
 export default FoodCategoryChip;

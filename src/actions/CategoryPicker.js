@@ -1,23 +1,11 @@
-export const SELECT_CATEGORY = 'SELECT_CATEGORY';
-export const DESELECT_CATEGORY = 'DESELECT_CATEGORY';
+export const HANDLE_CLICK_CATEGORY_CHIP = 'HANDLE_CLICK_CATEGORY_CHIP';
 
-export const selectCategory = (categoryIndex) => {
+export const handleClickCategoryChip = (categoryIndex) => {
   return {
-    type: SELECT_CATEGORY,
-    payload: {
-      categoryIndex
-    }
-  }
-}
-
-export const deselectCategory = (categoryIndex) => {
-  return {
-    type: DESELECT_CATEGORY,
-    payload: {
-      categoryIndex
-    }
-  }
-}
+    type: HANDLE_CLICK_CATEGORY_CHIP,
+    categoryIndex
+  };
+};
 
 export const handleGetRecommendations = () => {
   if (this.state.selectedCategories.length > 0) {
