@@ -1,7 +1,7 @@
 export const SELECT_YES = 'SELECT_YES';
 export const SELECT_NEXT = 'SELECT_NEXT';
 
-export const selectYes = (restaurant) => {
+export const handleYes = (restaurant) => {
   return {
     type: SELECT_YES,
     payload: {
@@ -10,7 +10,7 @@ export const selectYes = (restaurant) => {
   }
 }
 
-export const selectNext = (restaurant) => {
+export const handleNext = (restaurant) => {
   return {
     type: SELECT_NEXT,
     payload: {

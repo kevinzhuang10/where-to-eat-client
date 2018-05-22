@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import queryString from 'query-string';
-import CategoryPicker from './CategoryPicker';
+import CategoryPickerContainer from '../containers/CategoryPickerContainer';
+import RestaurantPickerContainer from '../containers/RestaurantPickerContainer';
 import RestaurantPicker from './RestaurantPicker';
 import {selectCategory, deselectCategory, handleGetRecommendations, handleClickCategoryChip} from '../actions/CategoryPicker';
 import {selectYes, selectNext} from '../actions/RestaurantPicker';
 import {highlightCategory} from '../actions/UIState';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
-class HomePage extends Component {
+
+// class HomePage extends Component {
   // constructor(props) {
   //   super(props);
   //   this.state = {
@@ -91,48 +93,19 @@ class HomePage extends Component {
   //   });
   // }
 
-  render() {
-    return (
-    <div>
-      {this.props.showCategoryPicker &&
-        <CategoryPicker
-          categoryStates={this.props.categoryStates}
-          handleClickCategoryChip={this.props.handleClickCategoryChip}
-          handleGetRecommendations={this.props.handleGetRecommendations}
-        />
-      }
-      {this.props.showRestaurantPicker &&
-        <RestaurantPicker
-          currentRestaurant={this.props.currentRestaurant}
-          handleNext={this.props.handleNext}
-          handleYes={this.props.handleYes}
-        />
-      }
-    </div>
-    );
+const HomePage = ({showCategoryPicker}) => {
+  let content;
+  if (showCategoryPicker) {
+    content = <CategoryPickerContainer/>;
+  } else {
+    content = <RestaurantPickerContainer/>;
   }
+
+  return (
+  <div>
+    {content}
+  </div>
+  );
 }
 
-// export default HomePage;
-
-
-
-const mapStateToProps = state => ({
-  showCategoryPicker: state.CategoryPicker.showCategoryPicker,
-  showRestaurantPicker: state.RestaurantPicker.showRestaurantPicker,
-  categoryStates: state.CategoryPicker.categoryStates,
-  currentRestaurant: state.RestaurantPicker.currentRestaurant,
-  availableOptions: state.RestaurantPicker.availableOptions,
-});
-
-const mapDispatchToProps = dispatch => ({
-  handleClickCategoryChip: categoryIndex => dispatch(handleClickCategoryChip(categoryIndex)),
-  handleYes: () => dispatch(selectYes()),
-  handleNext: () => dispatch(selectNext()),
-  handleGetRecommendations: () => dispatch(handleGetRecommendations())
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomePage);
+export default HomePage;

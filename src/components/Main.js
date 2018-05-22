@@ -1,5 +1,5 @@
 import React from 'react';
-import HomePage from './HomePage';
+import HomePageContainer from '../containers/HomePageContainer';
 
 let styles = {
   marginTop: '100px' 
@@ -8,7 +8,7 @@ let styles = {
 const Main = (props) => {
   return (
     <div style={styles}>
-      <HomePage />
+      <HomePageContainer />
     </div>
   );
 }
