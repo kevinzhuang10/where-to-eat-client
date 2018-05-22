@@ -1,7 +1,6 @@
-import {SELECT_YES, SELECT_NEXT} from '../actions/RestaurantPicker'
+import {SELECT_YES, SELECT_NEXT, RECEIVE_RECOMMENDATIONS} from '../actions/RestaurantPicker'
 
 const initialState = {
-  showRestaurantPicker: false,
   availableOptions: [],
   currentRestaurant: null,
 }
@@ -31,6 +30,12 @@ const RestaurantPicker = (state = initialState, action) => {
           availableOptions: [],
           currentRestaurant: null
         }
+      }
+    case RECEIVE_RECOMMENDATIONS: 
+      return {
+        ...state,
+        availableOptions: action.availableOptions,
+        currentRestaurant: action.currentRestaurant
       }
     default:
       return state;

@@ -1,4 +1,4 @@
-import {HANDLE_CLICK_CATEGORY_CHIP} from '../actions/CategoryPicker'
+import {HANDLE_CLICK_CATEGORY_CHIP, REQUEST_RECOMMENDATIONS} from '../actions/CategoryPicker'
 
 export const initialCategories = ['Burger', 'Mexican Food', 'Korean Food', 'Italian Food', 'Chinese Food', 'Mediterranean Food', 'Salad', 'Thai Food', 'Japanese Food', 'Indian Food'];
 const initialCategoriesState = initialCategories.map(category => {
@@ -12,7 +12,10 @@ const initialState = {
   showCategoryPicker: true,
   choicesAvailable: 5,
   categoryStates: initialCategoriesState,
-  numberSelected: 0
+  numberSelected: 0,
+  userLat: '37.760737',
+  userLon: '-122.467954',
+  isFetching: false
 }
 
 const CategoryPickerReducer = (state = initialState, action) => {
@@ -42,6 +45,13 @@ const CategoryPickerReducer = (state = initialState, action) => {
         categoryStates: newCategoryStates,
         numberSelected: selecting ? numberSelected + 1 : numberSelected - 1
       }
+
+    case REQUEST_RECOMMENDATIONS:
+      return {
+        ...state,
+        isFetching: true,
+        showCategoryPicker: false
+      };
 
     default:
       return state;
