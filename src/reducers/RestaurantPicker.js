@@ -15,7 +15,7 @@ const RestaurantPicker = (state = initialState, action) => {
         currentRestaurant: null
       };
     case SELECT_NEXT:
-      let newAvailableOptions = this.state.availableOptions.slice();
+      let newAvailableOptions = state.availableOptions.slice();
       let nextRestaurant = newAvailableOptions.pop();
       if (nextRestaurant) {
         return {

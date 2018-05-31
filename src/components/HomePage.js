@@ -11,9 +11,9 @@ import { connect } from 'react-redux';
 
 const HomePage = ({showCategoryPicker, currentRestaurant}) => {
   let content;
-  if (showCategoryPicker) {
+  if (!currentRestaurant) {
     content = <CategoryPickerContainer/>;
-  } else if (!showCategoryPicker && currentRestaurant){
+  } else {
     content = <RestaurantPickerContainer/>;
   }
 
