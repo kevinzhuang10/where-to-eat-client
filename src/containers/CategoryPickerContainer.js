@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import {handleClickCategoryChip, handleGetRecommendations} from '../actions/CategoryPicker';
+import {handleClickCategoryChip, handleGetRecommendations} from '../actions/recommend';
 import CategoryPicker from '../components/CategoryPicker';
 
 const mapStateToProps = state => ({
-  categoryStates: state.CategoryPicker.categoryStates
+  categoryStates: state.recommend.categoryStates
 });
 
 const mapDispatchToProps = dispatch => ({

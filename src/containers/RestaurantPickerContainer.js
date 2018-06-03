@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import {handleYes, handleNext} from '../actions/CategoryPicker';
+import {handleYes, handleNext} from '../actions/recommend';
 import RestaurantPicker from '../components/RestaurantPicker';
 
 const mapStateToProps = state => ({
-  currentRestaurant: state.CategoryPicker.currentRestaurant
+  currentRestaurant: state.recommend.currentRestaurant
 });
 
 const mapDispatchToProps = dispatch => ({

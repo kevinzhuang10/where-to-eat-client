@@ -4,7 +4,7 @@ import {
   RECEIVE_RECOMMENDATIONS,
   SELECT_YES, 
   SELECT_NEXT 
-} from '../actions/CategoryPicker'
+} from '../actions/recommend'
 
 export const initialCategories = ['Burger', 'Mexican Food', 'Korean Food', 'Italian Food', 'Chinese Food', 'Mediterranean Food', 'Salad', 'Thai Food', 'Japanese Food', 'Indian Food'];
 const initialCategoriesState = initialCategories.map(category => {
@@ -26,7 +26,7 @@ const initialState = {
   currentRestaurant: null,
 }
 
-const CategoryPickerReducer = (state = initialState, action) => {
+const recommend = (state = initialState, action) => {
   switch (action.type) {
     case HANDLE_CLICK_CATEGORY_CHIP:
       const {categoryStates, numberSelected, choicesAvailable} = state
@@ -99,4 +99,4 @@ const CategoryPickerReducer = (state = initialState, action) => {
   }
 }
 
-export default CategoryPickerReducer;
+export default recommend;

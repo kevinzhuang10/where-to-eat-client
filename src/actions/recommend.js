@@ -32,17 +32,17 @@ export const handleGetRecommendations = () => {
   return (dispatch, getState) => {
     console.log('got call here too', getState());
     const currentState = getState();
-    if (currentState.CategoryPicker.numberSelected <= 0) {
+    if (currentState.recommend.numberSelected <= 0) {
       return;
     }
     
-    const categoryString = currentState.CategoryPicker.categoryStates.filter(categoryState => {
+    const categoryString = currentState.recommend.categoryStates.filter(categoryState => {
       return categoryState.selected;
     }).map(categoryState => {
       return categoryState.categoryName;
     }).join('+'); 
-    const lat = currentState.CategoryPicker.userLat;
-    const lon = currentState.CategoryPicker.userLon;
+    const lat = currentState.recommend.userLat;
+    const lon = currentState.recommend.userLon;
     const queryString = `term=${categoryString}&latitude=${lat}&longitude=${lon}`;
     
     dispatch(requestRecommendations());

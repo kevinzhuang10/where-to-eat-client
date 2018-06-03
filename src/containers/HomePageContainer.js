@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import HomePage from '../components/HomePage';
 
 const mapStateToProps = state => ({
-  showCategoryPicker: state.CategoryPicker.showCategoryPicker,
-  currentRestaurant: state.CategoryPicker.currentRestaurant
+  showCategoryPicker: state.recommend.showCategoryPicker,
+  currentRestaurant: state.recommend.currentRestaurant
 });
 
 const HomePageContainer = connect(

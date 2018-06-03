@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import CategoryPicker from './CategoryPicker'
+import recommend from './recommend'
 
 const rootReducer = combineReducers({
-  CategoryPicker
+  recommend
 })
 
 export default rootReducer
