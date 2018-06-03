@@ -1,4 +1,10 @@
-import {HANDLE_CLICK_CATEGORY_CHIP, REQUEST_RECOMMENDATIONS} from '../actions/CategoryPicker'
+import {
+  HANDLE_CLICK_CATEGORY_CHIP, 
+  REQUEST_RECOMMENDATIONS,
+  RECEIVE_RECOMMENDATIONS,
+  SELECT_YES, 
+  SELECT_NEXT 
+} from '../actions/CategoryPicker'
 
 export const initialCategories = ['Burger', 'Mexican Food', 'Korean Food', 'Italian Food', 'Chinese Food', 'Mediterranean Food', 'Salad', 'Thai Food', 'Japanese Food', 'Indian Food'];
 const initialCategoriesState = initialCategories.map(category => {
@@ -15,13 +21,15 @@ const initialState = {
   numberSelected: 0,
   userLat: '37.760737',
   userLon: '-122.467954',
-  isFetching: false
+  isFetching: false,
+  availableOptions: [],
+  currentRestaurant: null,
 }
 
 const CategoryPickerReducer = (state = initialState, action) => {
   switch (action.type) {
     case HANDLE_CLICK_CATEGORY_CHIP:
-    const {categoryStates, numberSelected, choicesAvailable} = state
+      const {categoryStates, numberSelected, choicesAvailable} = state
       const targetIndex = action.categoryIndex;
       let selecting = true;
       const newCategoryStates = categoryStates.map((categoryState, index) => {
@@ -52,6 +60,39 @@ const CategoryPickerReducer = (state = initialState, action) => {
         isFetching: true,
         showCategoryPicker: false
       };
+
+      case SELECT_YES:
+      return {
+        ...state,
+        selectedCategories: [],
+        availableOptions: [],
+        currentRestaurant: null
+      };
+
+    case SELECT_NEXT:
+      let newAvailableOptions = state.availableOptions.slice();
+      let nextRestaurant = newAvailableOptions.pop();
+      if (nextRestaurant) {
+        return {
+          ...state,
+          availableOptions: newAvailableOptions,
+          currentRestaurant: nextRestaurant
+        }
+      } else {
+        return {
+          ...state,
+          selectedCategories: [],
+          availableOptions: [],
+          currentRestaurant: null
+        }
+      }
+
+    case RECEIVE_RECOMMENDATIONS: 
+      return {
+        ...state,
+        availableOptions: action.availableOptions,
+        currentRestaurant: action.currentRestaurant
+      }
 
     default:
       return state;

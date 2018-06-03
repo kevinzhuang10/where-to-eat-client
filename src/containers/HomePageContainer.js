@@ -3,7 +3,7 @@ import HomePage from '../components/HomePage';
 
 const mapStateToProps = state => ({
   showCategoryPicker: state.CategoryPicker.showCategoryPicker,
-  currentRestaurant: state.RestaurantPicker.currentRestaurant
+  currentRestaurant: state.CategoryPicker.currentRestaurant
 });
 
 const HomePageContainer = connect(
