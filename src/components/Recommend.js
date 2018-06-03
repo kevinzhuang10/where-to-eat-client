@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CategoryPickerContainer from '../containers/CategoryPickerContainer';
 import RestaurantPickerContainer from '../containers/RestaurantPickerContainer';
 
-const HomePage = ({showCategoryPicker, currentRestaurant}) => {
+const Recommend = ({showCategoryPicker, currentRestaurant}) => {
   let content;
   if (!currentRestaurant) {
     content = <CategoryPickerContainer/>;
@@ -17,4 +17,4 @@ const HomePage = ({showCategoryPicker, currentRestaurant}) => {
   );
 }
 
-export default HomePage;
+export default Recommend;

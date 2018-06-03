@@ -1,6 +1,6 @@
 import React from 'react';
 import FoodCategoryChips from './FoodCategoryChips';
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from '@material-ui/core/Button';
 
 const style = {
   margin: 12,
@@ -13,12 +13,14 @@ const CategoryPicker = (props) => {
         categoryStates={props.categoryStates} 
         handleClickCategoryChip={props.handleClickCategoryChip}
       />
-      <RaisedButton 
-        label="Show Me The Magic" 
-        primary={true} 
+      <Button
+        variant="contained"
+        color="primary" 
         style={style}
         onClick={props.handleGetRecommendations} 
-      />
+      >
+        Recommend
+      </Button>
     </div>
   );
 }

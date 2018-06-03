@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
-import HomePage from '../components/HomePage';
+import Recommend from '../components/Recommend';
 
 const mapStateToProps = state => ({
   showCategoryPicker: state.recommend.showCategoryPicker,
   currentRestaurant: state.recommend.currentRestaurant
 });
 
-const HomePageContainer = connect(
+const RecommendContainer = connect(
   mapStateToProps
-)(HomePage);
+)(Recommend);
 
 
-export default HomePageContainer;
+export default RecommendContainer;
