@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route, Switch } from 'react-router'
 import RecommendContainer from '../containers/RecommendContainer';
 
 let styles = {
@@ -8,7 +9,9 @@ let styles = {
 const Main = (props) => {
   return (
     <div style={styles}>
-      <RecommendContainer />
+      <Switch>
+        <Route exact path="/" component={RecommendContainer}/>
+      </Switch>
     </div>
   );
 }
