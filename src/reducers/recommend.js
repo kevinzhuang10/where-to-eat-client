@@ -3,7 +3,9 @@ import {
   REQUEST_RECOMMENDATIONS,
   RECEIVE_RECOMMENDATIONS,
   SELECT_YES, 
-  SELECT_NEXT 
+  SELECT_NEXT,
+  INPUT_LOCATION,
+  CHANGE_ADDRESS
 } from '../actions/recommend'
 
 export const initialCategories = ['Burger', 'Mexican Food', 'Korean Food', 'Italian Food', 'Chinese Food', 'Mediterranean Food', 'Salad', 'Thai Food', 'Japanese Food', 'Indian Food'];
@@ -19,8 +21,10 @@ const initialState = {
   choicesAvailable: 5,
   categoryStates: initialCategoriesState,
   numberSelected: 0,
-  userLat: '37.760737',
-  userLon: '-122.467954',
+  formattedAddress: '',
+  lat: '37.760737',
+  lng: '-122.467954',
+  addressName: '',
   isFetching: false,
   availableOptions: [],
   currentRestaurant: null,
@@ -94,6 +98,21 @@ const recommend = (state = initialState, action) => {
         currentRestaurant: action.currentRestaurant
       }
 
+    case INPUT_LOCATION:
+      return {
+        ...state,
+        formattedAddress: action.locationString
+      }
+      
+    case CHANGE_ADDRESS:
+      return {
+        ...state,
+        formattedAddress: action.formattedAddress,
+        lat: action.lat,
+        lng: action.lng,
+        addressName: action.addressName
+      }
+      
     default:
       return state;
   }

@@ -4,6 +4,15 @@ export const REQUEST_RECOMMENDATIONS = 'REQUEST_RECOMMENDATIONS';
 export const RECEIVE_RECOMMENDATIONS = 'RECEIVE_RECOMMENDATIONS';
 export const SELECT_YES = 'SELECT_YES';
 export const SELECT_NEXT = 'SELECT_NEXT';
+export const INPUT_LOCATION = 'INPUT_LOCATION';
+export const CHANGE_ADDRESS = 'CHANGE_ADDRESS';
+
+export const inputLocation = (locationString) => {
+  return {
+    type: INPUT_LOCATION,
+    locationString
+  }
+}
 
 export const handleClickCategoryChip = (categoryIndex) => {
   return {
@@ -41,9 +50,9 @@ export const handleGetRecommendations = () => {
     }).map(categoryState => {
       return categoryState.categoryName;
     }).join('+'); 
-    const lat = currentState.recommend.userLat;
-    const lon = currentState.recommend.userLon;
-    const queryString = `term=${categoryString}&latitude=${lat}&longitude=${lon}`;
+    const lat = currentState.recommend.lat;
+    const lng = currentState.recommend.lng;
+    const queryString = `term=${categoryString}&latitude=${lat}&longitude=${lng}`;
     
     dispatch(requestRecommendations());
     return fetchRecommendations(queryString)
@@ -74,5 +83,15 @@ export const handleNext = (restaurant) => {
   return {
     type: SELECT_NEXT,
     restaurant
+  }
+}
+
+export const changeAddress = ({formatted_address, geometry, name}) => {
+  return {
+    type: CHANGE_ADDRESS,
+    formattedAddress: formatted_address,
+    lat: geometry.location.lat(),
+    lng: geometry.location.lng(),
+    addressName: name
   }
 }
