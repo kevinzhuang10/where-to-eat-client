@@ -3,26 +3,50 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import FoodCategoryChips from '../components/FoodCategoryChips';
 import Button from '@material-ui/core/Button';
+import AddCategory from '../components/AddCategory';
 import SearchBox from '../components/SearchBox';
 import { connect } from 'react-redux';
-import {handleClickCategoryChip, handleGetRecommendations, inputLocation, changeAddress} from '../actions/recommend';
+import {
+  handleClickCategoryChip, 
+  handleGetRecommendations, 
+  inputCategory, 
+  changeAddress,
+  handleDeleteCategory,
+  addCategory
+} from '../actions/recommend';
 
 const styles = theme => ({
   button: {
     margin: 12,
   },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+  }
 });
 
 const CategoryPicker = (props) => {
-  const { classes } = props;
+  const {
+    classes,
+    inputCategory,
+    addCategoryTextField,
+    handleAddCategory
+  } = props;
   return (
     <div>
+      <SearchBox
+        onPlacesChanged={props.changeAddress}
+      />
       <FoodCategoryChips 
         categoryStates={props.categoryStates} 
         handleClickCategoryChip={props.handleClickCategoryChip}
+        handleDeleteCategory={props.handleDeleteCategory}
       />
-      <SearchBox
-        onPlacesChanged={props.changeAddress}
+      <AddCategory 
+        handleAddCategoryTextFieldChange={inputCategory}
+        addCategoryTextField={addCategoryTextField}
+        handleAddCategory={handleAddCategory}
       />
       <Button
         variant="contained"
@@ -42,14 +66,17 @@ CategoryPicker.propTypes = {
 
 const mapStateToProps = state => ({
   categoryStates: state.recommend.categoryStates,
-  userLocation: state.recommend.userLocation
+  userLocation: state.recommend.userLocation,
+  addCategoryTextField: state.recommend.addCategoryTextField
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleClickCategoryChip: categoryIndex => dispatch(handleClickCategoryChip(categoryIndex)),
+  handleClickCategoryChip: categoryObject => dispatch(handleClickCategoryChip(categoryObject)),
   handleGetRecommendations: () => dispatch(handleGetRecommendations()),
-  inputLocation: (e) => dispatch(inputLocation(e.target.value)),
-  changeAddress: (addressObject) => dispatch(changeAddress(addressObject))
+  inputCategory: (e) => dispatch(inputCategory(e.target.value)),
+  changeAddress: (addressObject) => dispatch(changeAddress(addressObject)),
+  handleDeleteCategory: (categoryObject) => dispatch(handleDeleteCategory(categoryObject)),
+  handleAddCategory: (categoryString) => dispatch(addCategory(categoryString))
 });
 
 const CategoryPickerContainer = connect(

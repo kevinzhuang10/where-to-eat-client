@@ -20,6 +20,7 @@ const FoodCategoryChips = (props) => {
             categoryIndex={i}
             categoryState={categoryState}
             handleClickCategoryChip={props.handleClickCategoryChip}
+            handleDeleteCategory={props.handleDeleteCategory}
           />
         )})
       }

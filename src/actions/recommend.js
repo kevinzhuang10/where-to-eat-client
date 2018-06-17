@@ -1,23 +1,32 @@
 import axios from 'axios';
 export const HANDLE_CLICK_CATEGORY_CHIP = 'HANDLE_CLICK_CATEGORY_CHIP';
+export const HANDLE_DELETE_CATEGORY = 'HANDLE_DELETE_CATEGORY';
 export const REQUEST_RECOMMENDATIONS = 'REQUEST_RECOMMENDATIONS';
 export const RECEIVE_RECOMMENDATIONS = 'RECEIVE_RECOMMENDATIONS';
 export const SELECT_YES = 'SELECT_YES';
 export const SELECT_NEXT = 'SELECT_NEXT';
-export const INPUT_LOCATION = 'INPUT_LOCATION';
+export const INPUT_CATEGORY = 'INPUT_CATEGORY';
+export const ADD_CATEGORY = 'ADD_CATEGORY';
 export const CHANGE_ADDRESS = 'CHANGE_ADDRESS';
 
-export const inputLocation = (locationString) => {
+export const inputCategory = (categoryString) => {
   return {
-    type: INPUT_LOCATION,
-    locationString
+    type: INPUT_CATEGORY,
+    categoryString
   }
 }
 
-export const handleClickCategoryChip = (categoryIndex) => {
+export const addCategory = (categoryString) => {
+  return {
+    type: ADD_CATEGORY,
+    categoryString
+  }
+}
+
+export const handleClickCategoryChip = (category) => {
   return {
     type: HANDLE_CLICK_CATEGORY_CHIP,
-    categoryIndex
+    category
   };
 };
 
@@ -93,5 +102,12 @@ export const changeAddress = ({formatted_address, geometry, name}) => {
     lat: geometry.location.lat(),
     lng: geometry.location.lng(),
     addressName: name
+  }
+}
+
+export const handleDeleteCategory = (category) => {
+  return {
+    type: HANDLE_DELETE_CATEGORY,
+    category
   }
 }

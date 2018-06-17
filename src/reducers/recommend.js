@@ -1,15 +1,17 @@
 import {
   HANDLE_CLICK_CATEGORY_CHIP, 
+  HANDLE_DELETE_CATEGORY,
   REQUEST_RECOMMENDATIONS,
   RECEIVE_RECOMMENDATIONS,
   SELECT_YES, 
   SELECT_NEXT,
-  INPUT_LOCATION,
+  INPUT_CATEGORY,
+  ADD_CATEGORY,
   CHANGE_ADDRESS
 } from '../actions/recommend'
 
 export const initialCategories = ['Burger', 'Mexican Food', 'Korean Food', 'Italian Food', 'Chinese Food', 'Mediterranean Food', 'Salad', 'Thai Food', 'Japanese Food', 'Indian Food'];
-const initialCategoriesState = initialCategories.map(category => {
+const initialCategoryStates = initialCategories.map(category => {
   return {
     categoryName: category,
     selected: false
@@ -19,7 +21,8 @@ const initialCategoriesState = initialCategories.map(category => {
 const initialState = {
   showCategoryPicker: true,
   choicesAvailable: 5,
-  categoryStates: initialCategoriesState,
+  maxCategoriesCount: 15,
+  categoryStates: initialCategoryStates,
   numberSelected: 0,
   formattedAddress: '',
   lat: '37.760737',
@@ -28,16 +31,26 @@ const initialState = {
   isFetching: false,
   availableOptions: [],
   currentRestaurant: null,
+  addCategoryTextField: ''
 }
 
 const recommend = (state = initialState, action) => {
+  const {
+    categoryStates,
+    numberSelected,
+    choicesAvailable,
+    maxCategoriesCount
+  } = state;
+  let newCategoryStates;
+  let newCategoryState;
+  let newNumberSelected;
+
   switch (action.type) {
     case HANDLE_CLICK_CATEGORY_CHIP:
-      const {categoryStates, numberSelected, choicesAvailable} = state
-      const targetIndex = action.categoryIndex;
+      const targetCategory = action.category;
       let selecting = true;
-      const newCategoryStates = categoryStates.map((categoryState, index) => {
-        if (index === targetIndex) {
+      newCategoryStates = categoryStates.map(categoryState => {
+        if (categoryState.categoryName === targetCategory.categoryName) {
           selecting = !categoryState.selected;
           return {
             ...categoryState,
@@ -65,12 +78,13 @@ const recommend = (state = initialState, action) => {
         showCategoryPicker: false
       };
 
-      case SELECT_YES:
+    case SELECT_YES:
       return {
         ...state,
-        selectedCategories: [],
+        categoryStates: initialCategoryStates,
         availableOptions: [],
-        currentRestaurant: null
+        currentRestaurant: null,
+        numberSelected: 0
       };
 
     case SELECT_NEXT:
@@ -85,9 +99,10 @@ const recommend = (state = initialState, action) => {
       } else {
         return {
           ...state,
-          selectedCategories: [],
+          categoryStates: initialCategoryStates,
           availableOptions: [],
-          currentRestaurant: null
+          currentRestaurant: null,
+          numberSelected: 0
         }
       }
 
@@ -95,13 +110,39 @@ const recommend = (state = initialState, action) => {
       return {
         ...state,
         availableOptions: action.availableOptions,
-        currentRestaurant: action.currentRestaurant
+        currentRestaurant: action.currentRestaurant,
+        isFetching: false
       }
 
-    case INPUT_LOCATION:
+    case INPUT_CATEGORY:
       return {
         ...state,
-        formattedAddress: action.locationString
+        addCategoryTextField: action.categoryString
+      }
+
+    case ADD_CATEGORY:
+      if (action.categoryString.length < 1) {
+        return state;
+      }
+      const categoryExists = categoryStates.filter(categoryState => {
+        return categoryState.categoryName.toLowerCase() === action.categoryString.toLowerCase()
+      }).length > 0;
+      if (categoryExists || (categoryStates.length >= maxCategoriesCount)) {
+        return {
+          ...state,
+          addCategoryTextField: ''
+        }
+      }
+      newCategoryState = {
+        categoryName: action.categoryString,
+        selected: false
+      };
+      newCategoryStates = categoryStates.slice();
+      newCategoryStates.push(newCategoryState);
+      return {
+        ...state,
+        categoryStates: newCategoryStates,
+        addCategoryTextField: ''
       }
       
     case CHANGE_ADDRESS:
@@ -111,6 +152,20 @@ const recommend = (state = initialState, action) => {
         lat: action.lat,
         lng: action.lng,
         addressName: action.addressName
+      }
+
+    case HANDLE_DELETE_CATEGORY:
+      newCategoryStates = state.categoryStates.filter(categoryState => {
+        return categoryState.categoryName !== action.category.categoryName
+      });
+      newNumberSelected = state.numberSelected;
+      if (action.category.selected) {
+        newNumberSelected--;
+      }
+      return {
+        ...state,
+        categoryStates: newCategoryStates,
+        numberSelected: newNumberSelected
       }
       
     default:
