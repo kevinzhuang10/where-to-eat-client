@@ -1,6 +1,19 @@
+import React from 'react';
 import { connect } from 'react-redux';
 import {handleYes, handleNext} from '../actions/recommend';
-import RestaurantPicker from '../components/RestaurantPicker';
+import RestaurantCard from '../components/RestaurantCard';
+
+const RestaurantPicker = (props) => {
+  return (
+    <div>
+      <RestaurantCard 
+        restaurant={props.currentRestaurant}
+        handleNext={props.handleNext}
+        handleYes={props.handleYes}
+      />
+    </div>
+  )
+}
 
 const mapStateToProps = state => ({
   currentRestaurant: state.recommend.currentRestaurant
@@ -15,6 +28,5 @@ const RestaurantPickerContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(RestaurantPicker);
-
 
 export default RestaurantPickerContainer;

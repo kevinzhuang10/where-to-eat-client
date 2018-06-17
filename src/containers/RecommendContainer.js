@@ -1,5 +1,22 @@
+import React from 'react';
 import { connect } from 'react-redux';
-import Recommend from '../components/Recommend';
+import CategoryPickerContainer from '../containers/CategoryPickerContainer';
+import RestaurantPickerContainer from '../containers/RestaurantPickerContainer';
+
+const Recommend = ({currentRestaurant}) => {
+  let content;
+  if (!currentRestaurant) {
+    content = <CategoryPickerContainer/>;
+  } else {
+    content = <RestaurantPickerContainer/>;
+  }
+
+  return (
+  <div>
+    {content}
+  </div>
+  );
+}
 
 const mapStateToProps = state => ({
   showCategoryPicker: state.recommend.showCategoryPicker,
